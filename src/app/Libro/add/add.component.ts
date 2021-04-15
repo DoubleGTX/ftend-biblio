@@ -31,7 +31,7 @@ export class AddComponent implements OnInit {
       fecha_publicacion:new FormControl('', [ Validators.required,]),
       numero_ejemplares: new FormControl('', [ Validators.required,]),
       costo:new FormControl('', [ Validators.required,]),
-    });
+    })
   }
    Guardar(){
     this.service.createLibro(this.libro)
