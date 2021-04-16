@@ -16,10 +16,14 @@
                 <div class="form-group"  >
                     <label for="">Autor</label>
                     <input type="text" class="form-control"  formControlName="autor" [(ngModel)]="libro.autor" required>
-                </div>
-                <div class="form-group">
-                    <label for="">Fecha de Publicación</label>
-                    <input type="date" class="form-control" formControlName="fecha_publicacion" [(ngModel)]="libro.fecha_publicacion" required>
+                </div> 
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Fecha de publicación</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="dp3" class="form-control" formControlName="fecha_publicacion" [(ngModel)]="libro.fecha_publicacion" required readonly>
+                        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                      </mat-form-field>  
                 </div>
                 <div class="form-group">
                     <label for=""># de Ejemplares</label>
@@ -29,7 +33,7 @@
                     <label for="">Costo</label>
                     <input type="number" class="form-control" formControlName="costo" [(ngModel)]="libro.costo" required>
                 </div>
-                <button type="submit" [disabled]="!formu.valid" (click)="Guardar(libro)" class="btn btn-danger">Guardar</button>
+                <button type="submit" [disabled]="!formu.valid" (click)="Agr()" class="btn btn-danger">Guardar</button>
             </form>
         </div>
     </div>

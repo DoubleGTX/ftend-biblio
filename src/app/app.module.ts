@@ -12,13 +12,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSliderModule } from '@angular/material/slider';
+import { DataTablesModule } from 'angular-datatables';
+import {  MatPaginatorModule } from '@angular/material/paginator';
+import {  MatDatepickerModule, MatFormFieldModule, MatInputModule, MatLabel, MatNativeDateModule, MatTableModule } from '@angular/material';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ListarComponent,
     AddComponent,
-    EditComponent
+    EditComponent,
+  
   ],
   imports: [
     BrowserModule,
@@ -29,6 +35,13 @@ import { MatSliderModule } from '@angular/material/slider';
     BrowserAnimationsModule,
     MatSnackBarModule,
     MatSliderModule,
+    DataTablesModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [
     ServiceService

@@ -3,8 +3,7 @@
         <div class="card-header">
             <h3>Libros</h3>
         </div>
-        <div class="card-body">
-            <table class="table table-hover">
+            <table *ngIf="libros?.length > 0" datatable [dtOptions]="dtOptions" class="row-border hover">
                 <thead>
                     <tr class="text-center">
                         <th>Nombre</th>
@@ -14,23 +13,72 @@
                         <th># de Ejemplares</th>
                         <th>Costo</th>
                         <th>Acciones</th>
+                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let libro of libros"class="text-center">
+                    <tr *ngFor="let libro of libros" class="text-center">
                         <td>{{libro.nombre}}</td>
                         <td>{{libro.descripcion}}</td>
                         <td>{{libro.autor}}</td>
                         <td>{{libro.fecha_publicacion}}</td>
                         <td>{{libro.numero_ejemplares}}</td>
                         <td>{{libro.costo}}</td>
-                        <td>
-                            <button (click)="Editar(libro)" class="btn btn-warning">Editar</button>
-                            <button (click)="Delete(libro)" class="btn btn-danger">Eliminar</button>
-                        </td>
+                        <td><button (click)="Editar(libro)" class="btn btn-warning">Editar</button></td>
+                        <td><button (click)="Delete(libro)" class="btn btn-danger">Eliminar</button></td>
                     </tr>
                 </tbody>
             </table>
-        </div>
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+              </mat-form-field>
+              
+              <div class="mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource" matSort>
+              
+                  <ng-container matColumnDef="nombre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                    <td mat-cell *matCellDef="let row"> {{nombre}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="descripcion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+                    <td mat-cell *matCellDef="let row"> {{descripcion}}% </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="autor">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Autor </th>
+                    <td mat-cell *matCellDef="let row"> {{autor}} </td>
+                  </ng-container>
+              
+                  <ng-container matColumnDef="fecha_publicacion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de publicación </th>
+                    <td mat-cell *matCellDef="let row"> {{fecha_publicacion}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="numero_ejemplares">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> # de Ejemplares </th>
+                    <td mat-cell *matCellDef="let row"> {{numero_ejemplares}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="costo">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo </th>
+                    <td mat-cell *matCellDef="let row"> {{costo}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+              </div>
+                <div *ngIf="libros?.length <= 0">
+                      <p colspan="3" class="text-center">No hay datos! :'(</p>
+                </div>
+            <br>
     </div>
 </div>
