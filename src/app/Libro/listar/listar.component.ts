@@ -4,46 +4,60 @@ import { Router } from '@angular/router';
 import { Libro } from 'src/app/Models/libro';
 import { ServiceService } from 'src/app/Service/service.service';
 
+export interface Libros {
+    nombre: string;
+    descripcion: string;
+    autor: string;
+    fecha_publicacion: Date;
+    numero_ejemplares?: number;
+    costo?: number
+  }
+
 @Component({
   selector: 'app-listar',
   templateUrl: './listar.component.html',
   styleUrls: ['./listar.component.scss']
 }) 
-
 export class ListarComponent implements OnInit, AfterViewInit  {
- 
-  
 
   
+
   libros:Libro[];
-  displayedColumns: string[] = ['nombre', 'descripcion', 'autor', 'fecha_publicacion', 'numero_ejemplares', 'costo'];
-  dataSource: MatTableDataSource<Libro>;
+  dataSource: Libros[];
+  displayedColumns: string[];
   @ViewChild(MatPaginator,{static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private service:ServiceService, private router:Router) { 
+  constructor(private service:ServiceService, private router:Router) {  
+     this.displayedColumns = ['nombre', 'descripcion', 'autor', 'fecha_publicacion', 'numero_ejemplares', 'costo'];
+     this.service.getLibros()
+    .subscribe(data=>{
+      console.log(data);
+      this.libros=data;
+      this.dataSource = this.libros;
+
+     //this.dataSource = data;
+     //this.dataSource.paginator = this.paginator;
+     //this.dataSource.sort = this.sort;
+    });
+     
   }
 
   ngOnInit() {
-    this.service.getLibros()
-    .subscribe(data=>{
-     this.libros=data;
-     this.dataSource = new MatTableDataSource(data);
-     this.dataSource.paginator = this.paginator;
-     this.dataSource.sort = this.sort;
-    });
+  // this.data()
   }
 
+  data(){ }
   ngAfterViewInit() {
 
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    //this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    //if (this.dataSource.paginator) {
+      //this.dataSource.paginator.firstPage();
+    //}
   }
 
   Editar(libro:Libro){
